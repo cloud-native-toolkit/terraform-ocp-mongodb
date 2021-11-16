@@ -52,7 +52,7 @@ spec:
             name: data-volume
           spec:
             accessModes: [ "ReadWriteOnce" ]
-            storageClassName: "ibmc-vpc-block-10iops-tier"
+            storageClassName: %STORCLASS%
             resources:
               requests:
                 storage: "20Gi"
@@ -60,7 +60,7 @@ spec:
             name: logs-volume
           spec:
             accessModes: [ "ReadWriteOnce" ]
-            storageClassName: "ibmc-vpc-block-10iops-tier"
+            storageClassName: %STORCLASS%
             resources:
               requests:
                 storage: "2Gi"
