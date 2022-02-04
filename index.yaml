@@ -9,6 +9,73 @@ versions:
       - ocp4
     dependencies:
       - id: cluster
+        refs: []
+        interface: github.com/cloud-native-toolkit/automation-modules#cluster
+      - id: namespace
+        refs:
+          - source: github.com/ibm-garage-cloud/terraform-k8s-namespace
+            version: ">= 2.1.0"
+    variables:
+      - name: cluster_type
+        moduleRef:
+          id: cluster
+          output: platform.type_code
+        type: string
+        description: The cluster type (openshift or ocp3 or ocp4 or kubernetes)
+        default: ocp4
+        optional: true
+      - name: cluster_ingress_hostname
+        moduleRef:
+          id: cluster
+          output: platform.ingress
+        type: string
+        description: Ingress hostname of the IKS cluster.
+      - name: cluster_config_file
+        moduleRef:
+          id: cluster
+          output: config_file_path
+        type: string
+        description: Cluster config file for Kubernetes cluster.
+      - name: tls_secret_name
+        moduleRef:
+          id: cluster
+          output: platform.tls_secret
+        type: string
+        description: The secret containing the tls certificates
+        default: ""
+        optional: true
+      - name: mongo_namespace
+        type: string
+        description: Namespace where MongoDB is deployed
+        default: mongo
+        optional: true
+      - name: mongo_storageclass
+        type: string
+        description: Storageclass for MongoDB
+        default: ibmc-vpc-block-10iops-tier
+        optional: true
+      - name: mongo_serviceaccount
+        type: string
+        description: Name of the service account to use for mongo
+        default: mongodb-kubernetes-operator
+        optional: true
+      - name: mongo_password
+        type: string
+        description: admin password for mongodb
+        default: changeMechange01
+        optional: true
+    version: v1.2.1
+    outputs:
+      - name: mongo_pw
+        description: mongo admin pw
+      - name: mongo_namespace
+        description: Namespace mongo is located in cluster
+      - name: mongo_servicename
+        description: Name of mongo service to connect to
+  - platforms:
+      - ocp4
+    dependencies:
+      - id: cluster
         refs:
           - source: github.com/ibm-garage-cloud/terraform-ibm-container-platform
             version: ">= 1.7.0"
